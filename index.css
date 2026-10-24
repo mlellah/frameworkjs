@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg-1: #4f46e5;       /* indigo */
+    --bg-2: #c026d3;       /* magenta */
+    --bg-3: #f97316;       /* orange */
+    --panel: #1e1b4b;      /* bleu nuit */
+    --screen: #0f0d2e;
+    --key: #312e81;
+    --key-hover: #4338ca;
+    --text: #ffffff;
+    --muted: #a5b4fc;
+    --op-from: #fb923c;
+    --op-to: #f43f5e;
+    --eq-from: #22d3ee;
+    --eq-to: #34d399;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  }
+
+  .calculator {
+    width: 340px;
+    max-width: 94vw;
+    padding: 22px;
+    background: var(--panel);
+    border-radius: 28px;
+    box-shadow: 0 25px 60px rgba(15, 13, 46, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .display {
+    background: var(--screen);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    text-align: right;
+    overflow: hidden;
+  }
+
+  .history {
+    min-height: 20px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .screen {
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+
+  .keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .key {
+    height: 62px;
+    border: none;
+    border-radius: 16px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: transform 0.08s, background 0.15s, filter 0.15s;
+  }
+
+  .key:active {
+    transform: scale(0.94);
+  }
+
+  .key:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+  }
+
+  /* Chiffres */
+  .num {
+    background: var(--key);
+  }
+  .num:hover {
+    background: var(--key-hover);
+  }
+
+  /* C, ⌫, % */
+  .clear,
+  .key[data-action="percent"] {
+    background: #a5b4fc;
+    color: var(--panel);
+  }
+  .clear:hover,
+  .key[data-action="percent"]:hover {
+    background: #c7d2fe;
+  }
+
+  /* Opérateurs */
+  .op {
+    background: linear-gradient(135deg, var(--op-from), var(--op-to));
+    box-shadow: 0 6px 14px rgba(244, 63, 94, 0.35);
+  }
+  .op:hover {
+    filter: brightness(1.12);
+  }
+
+  /* Égal */
+  .equal {
+    background: linear-gradient(135deg, var(--eq-from), var(--eq-to));
+    color: var(--panel);
+    box-shadow: 0 6px 14px rgba(34, 211, 238, 0.35);
+  }
+  .equal:hover {
+    filter: brightness(1.1);
+  }
+
+  .zero {
+    grid-column: span 2;
+  }
