@@ -1,0 +1,76 @@
+name: Deploy branches to GitHub Pages
+
+on:
+  push:
+    branches:
+      - tp01
+      - calculer_une_mention
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout tp01
+        uses: actions/checkout@v4
+        with:
+          ref: tp01
+          path: tp01
+
+      - name: Checkout calculer_une_mention
+        uses: actions/checkout@v4
+        with:
+          ref: calculer_une_mention
+          path: calculer_une_mention
+
+      - name: Prepare deployment
+        run: |
+          mkdir -p _site/tp01 _site/calculer_une_mention
+
+          rsync -av --exclude='.git' --exclude='.github' tp01/ _site/tp01/
+          rsync -av --exclude='.git' --exclude='.github' calculer_une_mention/ _site/calculer_une_mention/
+
+          cat > _site/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="fr">
+          <head>
+            <meta charset="UTF-8">
+            <title>frameworkjs</title>
+          </head>
+          <body>
+            <h1>frameworkjs</h1>
+            <ul>
+              <li><a href="./tp01/">TP01</a></li>
+              <li><a href="./calculer_une_mention/">Calculer une mention</a></li>
+            </ul>
+          </body>
+          </html>
+          EOF
+
+          touch _site/.nojekyll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
