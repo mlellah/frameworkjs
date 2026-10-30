@@ -2,44 +2,18 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TP01 - Calculatrice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculer une mention</title>
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <main class="calculator" aria-label="Calculatrice">
-    <div class="display">
-      <div id="history" class="history"></div>
-      <div id="screen" class="screen" aria-live="polite">0</div>
-    </div>
-
-    <div class="keys">
-      <button class="key clear" data-action="clear">C</button>
-      <button class="key clear" data-action="delete">⌫</button>
-      <button class="key" data-action="percent">%</button>
-      <button class="key op" data-op="/">÷</button>
-
-      <button class="key num" data-num="7">7</button>
-      <button class="key num" data-num="8">8</button>
-      <button class="key num" data-num="9">9</button>
-      <button class="key op" data-op="*">×</button>
-
-      <button class="key num" data-num="4">4</button>
-      <button class="key num" data-num="5">5</button>
-      <button class="key num" data-num="6">6</button>
-      <button class="key op" data-op="-">−</button>
-
-      <button class="key num" data-num="1">1</button>
-      <button class="key num" data-num="2">2</button>
-      <button class="key num" data-num="3">3</button>
-      <button class="key op" data-op="+">+</button>
-
-      <button class="key num zero" data-num="0">0</button>
-      <button class="key num" data-action="dot">.</button>
-      <button class="key equal" data-action="equal">=</button>
-    </div>
+  <main class="card">
+    <h1>Calculer une mention</h1>
+    <label for="note">Entrez une note entre 0 et 20</label>
+    <input type="number" id="note" step="0.01" placeholder="Ex : 14.5">
+    <button id="btn">Afficher la mention</button>
+    <p id="resultat" class="resultat"></p>
   </main>
-
   <script src="index.js"></script>
 </body>
 </html>
