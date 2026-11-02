@@ -1,25 +1,20 @@
-function factorielle(n) {
-  let resultat = 1;
-  for (let i = 2; i <= n; i++) {
-    resultat *= i;
-  }
-  return resultat;
+function calculerMoyenne(a, b, c) {
+  return (a + b + c) / 3;
 }
 
-const input = document.getElementById("n");
 const resultat = document.getElementById("resultat");
 
 function afficher() {
-  const n = Number(input.value);
+  const champs = ["a", "b", "c"].map((id) => document.getElementById(id).value);
+  const notes = champs.map(Number);
   resultat.classList.remove("cache", "erreur");
 
-  if (input.value === "" || !Number.isInteger(n) || n < 0) {
-    resultat.textContent = "Entrez un entier positif ou nul.";
+  if (champs.some((v) => v === "") || notes.some(isNaN)) {
+    resultat.textContent = "Remplissez les trois notes.";
     resultat.classList.add("erreur");
   } else {
-    resultat.textContent = `${n}! = ${factorielle(n)}`;
+    resultat.textContent = `Moyenne : ${calculerMoyenne(...notes).toFixed(2)}`;
   }
 }
 
 document.getElementById("btn").addEventListener("click", afficher);
-input.addEventListener("keydown", (e) => { if (e.key === "Enter") afficher(); });
