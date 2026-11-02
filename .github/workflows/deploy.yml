@@ -5,6 +5,9 @@ on:
     branches:
       - tp01
       - calculer_une_mention
+      - exercice1_factorielle
+      - exercice2_moyenne
+      - exercice3_voyelles
   workflow_dispatch:
 
 permissions:
@@ -16,58 +19,48 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  BRANCHES: >-
+    tp01
+    calculer_une_mention
+    exercice1_factorielle
+    exercice2_moyenne
+    exercice3_voyelles
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Checkout tp01
+      - name: Checkout (toutes les branches)
         uses: actions/checkout@v4
         with:
-          ref: tp01
-          path: tp01
-
-      - name: Checkout calculer_une_mention
-        uses: actions/checkout@v4
-        with:
-          ref: calculer_une_mention
-          path: calculer_une_mention
+          fetch-depth: 0
 
       - name: Prepare deployment
         run: |
-          mkdir -p _site/tp01 _site/calculer_une_mention
+          mkdir -p _site
+          LINKS=""
+          for b in $BRANCHES; do
+            if git rev-parse --verify "origin/$b" >/dev/null 2>&1; then
+              mkdir -p "_site/$b"
+              git archive "origin/$b" | tar -x -C "_site/$b"
+              rm -rf "_site/$b/.github"
+              LINKS="$LINKS<li><a href=\"./$b/\">$b</a></li>"
+            else
+              echo "Branche $b introuvable, ignorée"
+            fi
+          done
 
-          rsync -av --exclude='.git' --exclude='.github' tp01/ _site/tp01/
-          rsync -av --exclude='.git' --exclude='.github' calculer_une_mention/ _site/calculer_une_mention/
-
-          cat > _site/index.html <<'EOF'
-          <!DOCTYPE html>
-          <html lang="fr">
-          <head>
-            <meta charset="UTF-8">
-            <title>frameworkjs</title>
-          </head>
-          <body>
-            <h1>frameworkjs</h1>
-            <ul>
-              <li><a href="./tp01/">TP01</a></li>
-              <li><a href="./calculer_une_mention/">Calculer une mention</a></li>
-            </ul>
-          </body>
-          </html>
-          EOF
-
+          echo "<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"UTF-8\"><title>frameworkjs</title></head><body><h1>frameworkjs</h1><ul>$LINKS</ul></body></html>" > _site/index.html
           touch _site/.nojekyll
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v5
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
 
