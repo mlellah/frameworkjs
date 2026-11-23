@@ -1,25 +1,29 @@
-function factorielle(n) {
-  let resultat = 1;
-  for (let i = 2; i <= n; i++) {
-    resultat *= i;
-  }
-  return resultat;
-}
+// 1. Créer l'objet etudiant
+const etudiant = {
+  nom: "Ahmed",
+  prenom: "Mohamed",
+  age: 22,
+  filiere: "Informatique",
+  moyenne: 14.5
+};
 
-const input = document.getElementById("n");
-const resultat = document.getElementById("resultat");
+// 2. Afficher toutes les propriétés
+console.log("Toutes les propriétés :");
+console.log(etudiant);
 
-function afficher() {
-  const n = Number(input.value);
-  resultat.classList.remove("cache", "erreur");
+// 3. Afficher uniquement le nom et le prénom
+console.log("Nom :", etudiant.nom);
+console.log("Prénom :", etudiant.prenom);
 
-  if (input.value === "" || !Number.isInteger(n) || n < 0) {
-    resultat.textContent = "Entrez un entier positif ou nul.";
-    resultat.classList.add("erreur");
-  } else {
-    resultat.textContent = `${n}! = ${factorielle(n)}`;
-  }
-}
+// 4. Afficher la moyenne avec deux syntaxes
+console.log("Moyenne (avec le point) :", etudiant.moyenne);
+console.log("Moyenne (avec les crochets) :", etudiant["moyenne"]);
 
-document.getElementById("btn").addEventListener("click", afficher);
-input.addEventListener("keydown", (e) => { if (e.key === "Enter") afficher(); });
+// 5. Modifier l'âge à 23 ans
+etudiant.age = 23;
+console.log("Nouvel âge :", etudiant.age);
+
+// 6. Ajouter la propriété ville
+etudiant.ville = "Nouakchott";
+console.log("Objet final :");
+console.log(etudiant);
