@@ -1,29 +1,27 @@
-// 1. Créer l'objet etudiant
-const etudiant = {
-  nom: "Ahmed",
-  prenom: "Mohamed",
-  age: 22,
-  filiere: "Informatique",
-  moyenne: 14.5
+// 1. Créer l'objet produit
+const produit = {
+  reference: "P001",
+  nom: "Ordinateur portable",
+  prix: 500,
+  quantite: 10
 };
 
-// 2. Afficher toutes les propriétés
-console.log("Toutes les propriétés :");
-console.log(etudiant);
+// 2. Afficher le nom et le prix
+console.log("Nom :", produit.nom);
+console.log("Prix :", produit.prix);
 
-// 3. Afficher uniquement le nom et le prénom
-console.log("Nom :", etudiant.nom);
-console.log("Prénom :", etudiant.prenom);
+// 3. Calculer et afficher la valeur totale du stock
+const valeurStock = produit.prix * produit.quantite;
+console.log("Valeur totale du stock :", valeurStock);
 
-// 4. Afficher la moyenne avec deux syntaxes
-console.log("Moyenne (avec le point) :", etudiant.moyenne);
-console.log("Moyenne (avec les crochets) :", etudiant["moyenne"]);
+// 4. Modifier le prix
+produit.prix = 450;
+console.log("Nouveau prix :", produit.prix);
 
-// 5. Modifier l'âge à 23 ans
-etudiant.age = 23;
-console.log("Nouvel âge :", etudiant.age);
+// 5. Ajouter la propriété categorie
+produit.categorie = "Informatique";
+console.log("Après ajout de categorie :", produit);
 
-// 6. Ajouter la propriété ville
-etudiant.ville = "Nouakchott";
-console.log("Objet final :");
-console.log(etudiant);
+// 6. Supprimer la propriété reference
+delete produit.reference;
+console.log("Après suppression de reference :", produit);

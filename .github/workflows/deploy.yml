@@ -9,6 +9,7 @@ on:
       - exercice2_moyenne
       - exercice3_voyelles
       - Exercice_Creation_et_affichage_d_un_objet
+      - Gestion_d_un_produit
   workflow_dispatch:
 
 permissions:
@@ -28,6 +29,7 @@ env:
     exercice2_moyenne
     exercice3_voyelles
     Exercice_Creation_et_affichage_d_un_objet
+    Gestion_d_un_produit
 
 jobs:
   deploy:
